@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste biens immobilier{% endblock %}
+
+{% block body %}
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("click", function() {
+    var value = $(this).val().toLowerCase();
+    $("#filtre .portfolio-item").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+  <section id="portfolio" class="section-bg">
+    <div class="row">
+      <div class="col-8">
+        <h1>Biens Immobiliers</h1>
+      </div>
+    <div class="col-3">
+
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-primary">Filtrer</button>
+        <div class="btn-group" role="group">
+          {# <input type="text" id="myInput"> #}
+          <select class="form-control" name="filtre" id="myInput">
+            <option value="">Tout</option>
+            <option value="loft">Loft</option>
+            <option value="appartement">Appartement</option>
+            <option value="villa">Villa</option>
+            <option value="maison">Maison</option>
+            <option value="studio">Studio</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row portfolio-container" id="filtre">
+
+  {% for BienImmobilier in BienImmobiliers %}
+
+        <div class="col-lg-4 col-md-6 portfolio-item" data-aos="fade-up" data-aos-delay="0">
+          <div class="portfolio-wrap">
+            <figure>
+              <img src="{{ asset( '' ~ BienImmobilier.image ~ '') }}" class="little-img-fluid" alt="Responsive image">   
+            </figure>
+            <div class="portfolio-info">
+              <h4 class="text-left"> Nom : {{ BienImmobilier.nom }}</h4>
+                <p class="text-left">Prix : {{ BienImmobilier.prix }} € 
+                <small style="float:right"> Publié le {{ date }}</small>
+                {% for TypeBienImmobilier in BienImmobilier.TypeBienImmobilier %}
+  
+                  <button style="float:right"  class="btn btn-primary">{{ TypeBienImmobilier.nom }}</button>
+  
+                {% endfor %}
+            
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+  {% endfor %}
+
+
+  </div>
+
+  </section>
+</div>
+
+
+{% endblock %}
